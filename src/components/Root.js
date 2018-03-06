@@ -43,8 +43,6 @@ export default class Root extends Component {
         this.handleFetchUsers = this.handleFetchUsers.bind(this);
     }
 
-
-
     // ---------------------------------
 
 
@@ -64,6 +62,9 @@ export default class Root extends Component {
             return user.id !== ID;
         });
         this.setState({ users: stateCopy });
+
+        const json = JSON.stringify(stateCopy);
+        localStorage.setItem('users', json);
     }
 
     handleSearch() {
@@ -145,7 +146,13 @@ export default class Root extends Component {
             phone: this.newPhone.value
         });
         this.setState({ users: copyState });
+
+        const json = JSON.stringify(copyState);
+        localStorage.setItem('users', json);
+
         this.closeModal();
+
+        
     }
 
     // Name edition function
@@ -164,6 +171,9 @@ export default class Root extends Component {
             }
         }
         this.setState({ users });
+
+        const json = JSON.stringify(this.state.users);
+        localStorage.setItem('users', json);
     }
 
     // Address edition function
@@ -182,6 +192,8 @@ export default class Root extends Component {
             }
         }
         this.setState({ users });
+        const json = JSON.stringify(this.state.users);
+        localStorage.setItem('users', json);
     }
 
     // Company edition function
@@ -200,6 +212,8 @@ export default class Root extends Component {
             }
         }
         this.setState({ users });
+        const json = JSON.stringify(this.state.users);
+        localStorage.setItem('users', json);
     }
 
     // Phone edition function
@@ -218,10 +232,16 @@ export default class Root extends Component {
             }
         }
         this.setState({ users });
+        const json = JSON.stringify(this.state.users);
+        localStorage.setItem('users', json);
     }
 
     handleFetchUsers() {
-       console.log('fetch');
+        const json = localStorage.getItem('users');
+        const users = JSON.parse(json);
+        if(users) {
+            this.setState({ users });
+        }
     }
 
     render() {
