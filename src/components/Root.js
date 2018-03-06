@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import data from '../data';
+import {defaultState} from '../defaultState';
 import _ from 'lodash';
 import Lists from './Lists';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-const DATA = _.cloneDeep(data);
+// const DATA = _.cloneDeep(data);
 
 
 export default class Root extends Component {
     constructor() {
         super();
         this.state = {
-            users: [],
+            users: defaultState,
             search: '',
             // Sorting booleans
             sortByIndex: false,
@@ -37,6 +37,8 @@ export default class Root extends Component {
         // Modal Window Functions
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+
+        this.handleFetchUsers = this.handleFetchUsers.bind(this);
     }
 
 
@@ -44,23 +46,14 @@ export default class Root extends Component {
     // ---------------------------------
 
 
-
-    //Load initial data with it copy
-    componentDidMount() {
-        this.setState({ users: DATA});
-       
-    }
-
-    // Reset data to initial state
     handleResetUsers() {
         this.setState({ 
-            users: DATA,
+            users: defaultState,
             search: '',
             sortByIndex: false,
             sortByName: false,
             sortByAddress: false,
             sortByCompany: false, });
-       
     }
 
     handleDeleteUser(ID) {
@@ -69,7 +62,6 @@ export default class Root extends Component {
             return user.id !== ID;
         });
         this.setState({ users: stateCopy });
-       
     }
 
     handleSearch() {
@@ -157,14 +149,23 @@ export default class Root extends Component {
     // Name edtion function
     handleChangeName(ID, newName) {
         let users = this.state.users.slice();
-        for(let user of users) {
+        let newUser;
+        users.forEach(function(user) {
             if(user.id === ID) {
-                user.name = newName;
+                newUser = Object.assign({}, user);
+                newUser.name = newName;
+            }  
+        });
+        for(let index in users) {
+            if(users[index].id == newUser.id) {
+                users.splice(index, 1,newUser);
             }
         }
-        
         this.setState({ users });
-       
+    }
+
+    handleFetchUsers() {
+       console.log('fetch');
     }
 
     render() {
@@ -180,7 +181,7 @@ export default class Root extends Component {
             <div className="wrapper">
                 <nav className="navbar">
                 <div className="for-buttons">
-                    <button className="button-primary" id="btn-fetch-users">Fetch Users</button>
+                    <button className="button-primary" id="btn-fetch-users" onClick={event => this.handleFetchUsers()}>Fetch Users</button>
                     <button className="button-primary" id="btn-reset-users" onClick={event => this.handleResetUsers()}>Reset Users</button>
                     <span></span>
                     <button className="button-primary" id="btn-add-user" onClick={event => this.openModal()}>Add new subscriber</button>
