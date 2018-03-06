@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import {defaultState} from '../defaultState';
-import _ from 'lodash';
 import Lists from './Lists';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
-
-// const DATA = _.cloneDeep(data);
 
 
 export default class Root extends Component {
