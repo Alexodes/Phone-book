@@ -15,7 +15,10 @@ export default class Lists extends Component {
                     handleSortByIndex, 
                     handleSortByName, 
                     handleSortByAddress, 
-                    handleSortByCompany } = this.props;
+                    handleSortByCompany,
+                    handleChangeAddress,
+                    handleChangeCompany,
+                    handleChangePhone } = this.props;
             return (
                 <div>
                     <ul className="list-header">
@@ -38,6 +41,9 @@ export default class Lists extends Component {
                                     phone={user.phone}
                                     handleDeleteUser={handleDeleteUser}
                                     handleChangeName={handleChangeName}
+                                    handleChangeAddress={handleChangeAddress}
+                                    handleChangeCompany={handleChangeCompany}
+                                    handleChangePhone={handleChangePhone}
                                     />
                             )
                         })

@@ -33,7 +33,9 @@ export default class Root extends Component {
         this.handleSortByCompany = this.handleSortByCompany.bind(this);
         this.handleAddNewUser = this.handleAddNewUser.bind(this);
         this.handleChangeName = this.handleChangeName.bind(this);
-        
+        this.handleChangeAddress = this.handleChangeAddress.bind(this);
+        this.handleChangeCompany = this.handleChangeCompany.bind(this);
+        this.handleChangePhone = this.handleChangePhone.bind(this);
         // Modal Window Functions
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -146,7 +148,7 @@ export default class Root extends Component {
         this.closeModal();
     }
 
-    // Name edtion function
+    // Name edition function
     handleChangeName(ID, newName) {
         let users = this.state.users.slice();
         let newUser;
@@ -159,6 +161,60 @@ export default class Root extends Component {
         for(let index in users) {
             if(users[index].id == newUser.id) {
                 users.splice(index, 1,newUser);
+            }
+        }
+        this.setState({ users });
+    }
+
+    // Address edition function
+    handleChangeAddress(ID, newAddress) {
+        let users = this.state.users.slice();
+        let newUser;
+        users.forEach(function(user) {
+            if(user.id === ID) {
+                newUser = Object.assign({}, user);
+                newUser.address = { street: newAddress};
+            }  
+        });
+        for(let index in users) {
+            if(users[index].id == newUser.id) {
+                users.splice(index, 1, newUser);
+            }
+        }
+        this.setState({ users });
+    }
+
+    // Company edition function
+    handleChangeCompany(ID, newCompany) {
+        let users = this.state.users.slice();
+        let newUser;
+        users.forEach(function(user) {
+            if(user.id === ID) {
+                newUser = Object.assign({}, user);
+                newUser.company = { name: newCompany};
+            }  
+        });
+        for(let index in users) {
+            if(users[index].id == newUser.id) {
+                users.splice(index, 1, newUser);
+            }
+        }
+        this.setState({ users });
+    }
+
+    // Phone edition function
+    handleChangePhone(ID, newPhone) {
+        let users = this.state.users.slice();
+        let newUser;
+        users.forEach(function(user) {
+            if(user.id === ID) {
+                newUser = Object.assign({}, user);
+                newUser.phone = newPhone;
+            }  
+        });
+        for(let index in users) {
+            if(users[index].id == newUser.id) {
+                users.splice(index, 1, newUser);
             }
         }
         this.setState({ users });
@@ -228,6 +284,9 @@ export default class Root extends Component {
                         handleSortByAddress={this.handleSortByAddress}
                         handleSortByCompany={this.handleSortByCompany}
                         handleChangeName={this.handleChangeName}
+                        handleChangeAddress={this.handleChangeAddress}
+                        handleChangeCompany={this.handleChangeCompany}
+                        handleChangePhone={this.handleChangePhone}
                     />
                 </div>
             </div>
